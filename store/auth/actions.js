@@ -8,9 +8,7 @@ export default {
       })
       if (data.success) {
         commit('SET_TOKEN', data.result.refresh_token)
-        this.$cookies.set('token', data.result.refresh_token, {
-          secure: true
-        })
+        this.$cookies.set('token', data.result.refresh_token)
         this.$axios.setToken(data.result.access_token, 'Bearer')
       }
       return data.result.refresh_token
@@ -25,9 +23,7 @@ export default {
       const data = await this.$axios.$post(`/api/auth/refresh?token=${payload}`)
       if (data.success) {
         commit('SET_TOKEN', data.result.access_token)
-        this.$cookies.set('token', data.result.refresh_token, {
-          secure: true
-        })
+        this.$cookies.set('token', data.result.refresh_token)
         this.$axios.setToken(data.result.access_token, 'Bearer')
       }
       return data.result.refresh_token
