@@ -7,11 +7,20 @@
     <h2>
       Geography
     </h2>
+    <div>
+      {{ places }}
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  async asyncData ({ $axios }) {
+    const places = await $axios.$get('/api/places')
+    return {
+      places
+    }
+  },
   data () {
     return {
       items: [
