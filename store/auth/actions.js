@@ -11,10 +11,9 @@ export default {
         this.$cookies.set('token', data.result.refresh_token)
         this.$axios.setToken(data.result.access_token, 'Bearer')
       }
-      return data.result.refresh_token
+      return true
     } catch (error) {
-      console.log(error)
-      throw error
+      throw error.response.data.error.message
     }
   },
 
@@ -30,6 +29,15 @@ export default {
     } catch (error) {
       console.log(error)
       throw error
+    }
+  },
+
+  async restore ({ commit, dispatch, rootState }, email) {
+    try {
+      const data = await this.$axios.$get(`/api/auth/recovery?email=${email}`)
+      return data.result
+    } catch (error) {
+      throw error.response.data.error.message
     }
   }
 }

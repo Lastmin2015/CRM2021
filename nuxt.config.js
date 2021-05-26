@@ -20,6 +20,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '@/assets/main.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -41,9 +42,13 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     'cookie-universal-nuxt',
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/toast'
   ],
-
+  toast: {
+    position: 'top-right',
+    duration: 3000
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     credentials: true,
@@ -59,7 +64,7 @@ export default {
 
   proxy: {
     '/api': {
-      target: 'http://95.183.11.125:9595',
+      target: 'https://apitest.fun:9595',
       pathRewrite: {
         '^/api': '/api/v1'
       }

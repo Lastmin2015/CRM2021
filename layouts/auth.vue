@@ -14,6 +14,9 @@
           cols="12"
           md="4"
         >
+          <div class="logo text-center">
+            <b>LAST</b>MIN
+          </div>
           <nuxt />
         </v-col>
       </v-row>

@@ -1,37 +1,54 @@
 <template>
   <div>
-    <div class="logo text-center">
-      <b>LAST</b>MIN
-    </div>
     <div class="hello-text text-center">
       Hi!<br>
       Login to your dashboard
     </div>
-    <form @submit.prevent="signIn" class="auth-form">
-      <div class="auth-form__input">
-        <v-text-field
-          label="email"
-          type="email"
-          v-model="accountInfo.email"
-        ></v-text-field>
-      </div>
-      <div class="auth-form__input">
-        <v-text-field
-          label="password"
-          type="password"
-          v-model="accountInfo.password"
-        ></v-text-field>
-      </div>
-      <div class="auth-form__button">
-        <v-btn
-          block
-          large
-          type="submit"
-        >
-          Login
-        </v-btn>
-      </div>
+    <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
+    >
+    <form
+      @submit.prevent="signIn"
+      class="auth-form"
+    >
+        <div class="auth-form__input">
+          <v-text-field
+            label="email"
+            :rules="rules.emailRules"
+            v-model="accountInfo.email"
+          ></v-text-field>
+        </div>
+        <div class="auth-form__input">
+          <v-text-field
+            label="password"
+            type="password"
+            :rules="rules.passwordRules"
+            v-model="accountInfo.password"
+          ></v-text-field>
+        </div>
+        <div class="auth-form__button text-right">
+          <v-btn
+            block
+            large
+            dark
+            color="#33A8A1"
+            type="submit"
+          >
+            Login
+          </v-btn>
+          <nuxt-link to="/auth/restore-password" class="auth-form__restore">
+            <v-icon small>
+              mdi-lock-outline
+            </v-icon>
+            <span>
+            Forgot password?
+          </span>
+          </nuxt-link>
+        </div>
     </form>
+      </v-form>
   </div>
 </template>
 
@@ -43,9 +60,20 @@ export default {
   layout: 'auth',
   data () {
     return {
+      valid: false,
       accountInfo: {
         email: '',
         password: ''
+      },
+      rules: {
+        emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+        ],
+        passwordRules: [
+          v => !!v || 'Password is required',
+          v => (v && v.length > 6) || 'Password must be less than 6 characters'
+        ]
       }
     }
   },
@@ -54,26 +82,25 @@ export default {
       actionSignIn: 'auth/signIn'
     }),
     async signIn () {
-      await this.actionSignIn({
-        ...this.accountInfo
-      })
-      this.$router.push('/')
+      try {
+        this.$refs.form.validate()
+        if (!this.valid) {
+          return
+        }
+        const success = await this.actionSignIn({
+          ...this.accountInfo
+        })
+        if (success) {
+          this.$toast.success('Successfully authenticated')
+        }
+        this.$router.push('/')
+      } catch (error) {
+        this.$toast.error('Check the correctness of the entered data')
+      }
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-  .auth-form {
-    padding: 0 50px;
-    padding-right: 65px;
-  }
-  .logo {
-    color: #717887;
-    font-weight: 900;
-    font-size: 30px;
-    b {
-      color: #33A8A1;
-    }
-  }
 </style>

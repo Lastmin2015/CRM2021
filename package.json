@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/toast": "^3.3.1",
     "cookie-universal-nuxt": "^2.1.4",
     "cookieparser": "^0.1.0",
     "core-js": "^3.9.1",
