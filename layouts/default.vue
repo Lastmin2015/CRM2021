@@ -7,20 +7,78 @@
       app
     >
       <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
+        <template v-for="item in items">
+          <v-row
+            v-if="item.heading"
+            :key="item.heading"
+            align="center"
+          >
+            <v-col cols="6">
+              <v-subheader v-if="item.heading">
+                {{ item.heading }}
+              </v-subheader>
+            </v-col>
+          </v-row>
+          <v-list-group
+            v-else-if="item.children"
+            :key="item.text"
+            v-model="item.model"
+            :prepend-icon="item.icon"
+            append-icon=""
+          >
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ item.title }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list-item
+              v-for="(child, i) in item.children"
+              :key="i"
+              link
+              :to="child.to"
+            >
+              <v-list-item-action v-if="child.icon">
+                <v-icon>{{ child.icon }}</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ child.title }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+          <v-list-item
+            v-else
+            :key="item.title"
+            link
+            :to="item.to"
+          >
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>
+                {{ item.title }}
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+<!--        <v-list-item-->
+<!--          v-for="(item, i) in items"-->
+<!--          :key="i"-->
+<!--          :to="item.to"-->
+<!--          router-->
+<!--          exact-->
+<!--        >-->
+<!--          <v-list-item-action>-->
+<!--            <v-icon>{{ item.icon }}</v-icon>-->
+<!--          </v-list-item-action>-->
+<!--          <v-list-item-content>-->
+<!--            <v-list-item-title v-text="item.title" />-->
+<!--          </v-list-item-content>-->
+<!--        </v-list-item>-->
       </v-list>
     </v-navigation-drawer>
     <v-app-bar
@@ -69,7 +127,7 @@ export default {
         {
           icon: 'mdi-map-marker-multiple',
           title: 'Geography',
-          to: '/geography'
+          to: '/geography/country'
         },
         {
           icon: 'mdi-airplane',
@@ -79,7 +137,19 @@ export default {
         {
           icon: 'mdi-star-outline',
           title: 'Hotels',
-          to: '/hotels'
+          to: '/hotels',
+          children: [
+            {
+              // icon: 'mdi-plus',
+              to: '/hotels/descriptions',
+              title: 'Hotel description'
+            },
+            {
+              // icon: 'mdi-plus',
+              to: '/hotels/prices/room-types',
+              title: 'Hotel price tables'
+            }
+          ]
         },
         {
           icon: 'mdi-key-outline',

@@ -7,9 +7,27 @@
     <h2>
       Geography
     </h2>
-    <div>
-      {{ places }}
-    </div>
+    <v-tabs
+      centered
+      slot="extension"
+    >
+      <v-tab to="/geography/country">
+        Country
+      </v-tab>
+
+      <v-tab to="/geography/region">
+        Region
+      </v-tab>
+
+      <v-tab to="/geography/resort">
+        Resort
+      </v-tab>
+
+      <v-tab to="/geography/place">
+        Place
+      </v-tab>
+    </v-tabs>
+    <nuxt-child/>
   </div>
 </template>
 
