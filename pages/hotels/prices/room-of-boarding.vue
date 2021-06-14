@@ -52,7 +52,7 @@ export default {
         },
         {
           text: 'ID Boarding types',
-          value: 'boarding_id',
+          value: 'boarding_id'
         }
       ],
       mock: [
