@@ -2,6 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
+      :items="mock"
       sort-by="calories"
       class="elevation-1"
     >
@@ -47,12 +48,25 @@ export default {
           text: 'ID',
           align: 'start',
           sortable: false,
-          value: 'name'
+          value: 'id'
         },
         {
           text: 'ID Boarding types',
-          value: 'calories',
-          align: 'start'
+          value: 'boarding_id',
+        }
+      ],
+      mock: [
+        {
+          id: 'VA-2',
+          boarding_id: '01'
+        },
+        {
+          id: 'VA-1',
+          boarding_id: '02'
+        },
+        {
+          id: 'VA-3',
+          boarding_id: '03'
         }
       ],
       items: [

@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      sort-by="calories"
+      :items="mock"
       class="elevation-1"
     >
       <template v-slot:top>
@@ -47,12 +47,25 @@ export default {
           text: 'ID',
           align: 'start',
           sortable: false,
-          value: 'name'
+          value: 'id'
         },
         {
           text: 'Name',
-          value: 'calories',
-          align: 'start'
+          value: 'name'
+        }
+      ],
+      mock: [
+        {
+          id: 'SD9212969',
+          name: 'Россия'
+        },
+        {
+          id: 'SD9212921',
+          name: 'Бельгия'
+        },
+        {
+          id: 'SD9212922',
+          name: 'Норвегия'
         }
       ],
       items: [

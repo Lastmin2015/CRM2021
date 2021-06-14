@@ -10,7 +10,7 @@
     <div>
       <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="mock"
         sort-by="calories"
         class="elevation-1"
       >
@@ -62,12 +62,35 @@ export default {
           text: 'Airport ID',
           align: 'start',
           sortable: false,
-          value: 'name'
+          value: 'id'
         },
-        { text: 'Name', value: 'calories' },
-        { text: 'IATA code', value: 'fat' },
-        { text: 'Region ID', value: 'carbs' },
-        { text: 'Country ID', value: 'carbs' }
+        { text: 'Name', value: 'name' },
+        { text: 'IATA code', value: 'ita' },
+        { text: 'Region ID', value: 'region_id' },
+        { text: 'Country ID', value: 'country_id' }
+      ],
+      mock: [
+        {
+          id: 'SD9212969',
+          name: 'Stockholm ESSA',
+          ita: 'JFK',
+          region_id: 'SD9212969',
+          country_id: 'KH9212924'
+        },
+        {
+          id: 'SD9212961',
+          name: 'Toronto CYYZ',
+          ita: 'MIA',
+          region_id: 'SD9212963',
+          country_id: 'KH9212922'
+        },
+        {
+          id: 'SD9212965',
+          name: 'Washington KIAD',
+          ita: 'LCY',
+          region_id: 'SD9212912',
+          country_id: 'KH9212222'
+        }
       ],
       items: [
         {

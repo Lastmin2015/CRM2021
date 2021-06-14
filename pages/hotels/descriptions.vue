@@ -9,6 +9,7 @@
     </h2>
     <v-data-table
       :headers="headers"
+      :items="mock"
       sort-by="calories"
       class="elevation-1"
     >
@@ -54,15 +55,44 @@ export default {
           text: 'Hotel ID',
           align: 'start',
           sortable: false,
-          value: 'name'
+          value: 'id'
         },
-        { text: 'Hotel Name', value: 'calories' },
-        { text: 'Place', value: 'fat' },
-        { text: 'Resort', value: 'carbs' },
-        { text: 'Region', value: 'protein' },
-        { text: 'Country', value: 'protein' },
-        { text: 'Type', value: 'protein' },
+        { text: 'Hotel Name', value: 'name' },
+        { text: 'Place', value: 'place' },
+        { text: 'Resort', value: 'resort' },
+        { text: 'Region', value: 'region' },
+        { text: 'Country', value: 'country' },
+        { text: 'Type', value: 'type' },
         { text: '', value: 'actions', sortable: false }
+      ],
+      mock: [
+        {
+          id: 'SD9212969',
+          name: 'The Peninsula Chicago',
+          place: 'Cincinnati',
+          resort: 'Vancouver',
+          region: 'Africa',
+          country: 'Monaco',
+          type: 'Boutique'
+        },
+        {
+          id: 'SD9212929',
+          name: 'Andronis Boutique Hotel',
+          place: 'San Isidro',
+          resort: 'Medicine Hat',
+          region: 'Asia',
+          country: 'Georgia',
+          type: 'Business'
+        },
+        {
+          id: 'SD9212920',
+          name: 'Hanoi La Siesta Hote...',
+          place: 'North Las Vegas ',
+          resort: 'Laval',
+          region: 'Oceania',
+          country: 'Iceland',
+          type: 'Boutique'
+        }
       ],
       items: [
         {

@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      sort-by="calories"
+      :items="mock"
       class="elevation-1"
     >
       <template v-slot:top>
@@ -47,11 +47,31 @@ export default {
           text: 'ID',
           align: 'start',
           sortable: false,
-          value: 'name'
+          value: 'id'
         },
-        { text: 'Name', value: 'calories' },
-        { text: 'ID Region', value: 'fat' },
-        { text: 'ID Cities', value: 'carbs' }
+        { text: 'Name', value: 'name' },
+        { text: 'ID Region', value: 'id_region' },
+        { text: 'ID Cities', value: 'id_city' }
+      ],
+      mock: [
+        {
+          id: 'SD9212969',
+          name: 'Заморский',
+          id_region: 'KH9212924',
+          id_city: 'KH9212922'
+        },
+        {
+          id: 'SD9212921',
+          name: 'Константинопольский',
+          id_region: 'KH9212922',
+          id_city: 'KH9212962'
+        },
+        {
+          id: 'SD9212922',
+          name: 'Анапа',
+          id_region: 'KH9212923',
+          id_city: 'KH9212912'
+        }
       ],
       items: [
         {

@@ -2,6 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
+      :items="mock"
       sort-by="calories"
       class="elevation-1"
     >
@@ -47,11 +48,31 @@ export default {
           text: 'ID',
           align: 'start',
           sortable: false,
-          value: 'name'
+          value: 'id'
         },
-        { text: 'Name', value: 'calories' },
-        { text: 'Filter', value: 'fat' },
-        { text: 'ID Price', value: 'carbs' }
+        { text: 'Name', value: 'name' },
+        { text: 'Filter', value: 'filter' },
+        { text: 'ID Price', value: 'id_price' }
+      ],
+      mock: [
+        {
+          id: 1,
+          name: 'STANDARD 3',
+          ffb: 'BT-1',
+          id_price: 'n1'
+        },
+        {
+          id: 2,
+          name: 'STANDARD 1',
+          ffb: 'BT-3',
+          id_price: 'n2'
+        },
+        {
+          id: 3,
+          name: 'STANDARD 2',
+          ffb: 'BT-4',
+          id_price: 'n3'
+        }
       ],
       items: [
         {
