@@ -112,7 +112,19 @@ export default {
         {
           icon: 'mdi-book-check-outline',
           title: 'Payments',
-          to: '/payments'
+          to: '/payments',
+          children: [
+            {
+              // icon: 'mdi-plus',
+              to: '/payments/incoming',
+              title: 'Incoming'
+            },
+            {
+              // icon: 'mdi-plus',
+              to: '/payments/outgoing',
+              title: 'Outgoing'
+            }
+          ]
         },
         {
           icon: 'mdi-map',

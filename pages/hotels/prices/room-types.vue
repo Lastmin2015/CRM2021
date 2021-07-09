@@ -17,6 +17,44 @@
             vertical
           ></v-divider>
           <v-spacer></v-spacer>
+          <v-btn-toggle
+            small
+            color="primary"
+            dense
+            group
+          >
+            <v-btn
+              small
+              :value="1"
+              text
+            >
+              <v-icon>mdi-magnify</v-icon>
+            </v-btn>
+
+            <v-btn
+              small
+              :value="2"
+              text
+            >
+              <v-icon>mdi-filter-minus-outline</v-icon>
+            </v-btn>
+
+            <v-btn
+              small
+              :value="3"
+              text
+            >
+              <v-icon>mdi-filter-plus-outline</v-icon>
+            </v-btn>
+
+            <v-btn
+              small
+              :value="4"
+              text
+            >
+              <v-icon>mdi-table-column-width</v-icon>
+            </v-btn>
+          </v-btn-toggle>
         </v-toolbar>
       </template>
       <template v-slot:[`item.actions`]="">

@@ -5,7 +5,7 @@
       :items="items"
     />
     <h2>
-      Customers
+      Payments
     </h2>
     <div>
       <v-data-table
@@ -18,7 +18,7 @@
           <v-toolbar
             flat
           >
-            <v-toolbar-title>Travelers Information</v-toolbar-title>
+            <v-toolbar-title>Incoming </v-toolbar-title>
             <v-divider
               class="mx-4"
               inset
@@ -87,6 +87,12 @@
 
 <script>
 export default {
+  async asyncData ({ $axios }) {
+    const list = await $axios.$get('/api/airports')
+    return {
+      list
+    }
+  },
   data () {
     return {
       headers: [
@@ -97,42 +103,41 @@ export default {
         //   value: 'id'
         // },
         { text: 'REF Number', value: 'id' },
-        { text: 'Firstname', value: 'firstname' },
-        { text: 'Lastname', value: 'lastname', width: 150 },
-        { text: 'DOB', value: 'dob', width: 150 },
-        { text: 'Nationality', value: 'national', width: 200 },
-        { text: 'Pass number', value: 'pass_num', width: 200 },
-        { text: 'Pass expiry date', value: 'pass', width: 200 },
-        { text: 'Hotel', value: 'hotel', width: 150 },
-        { text: '', value: 'actions', width: 121 }
+        { text: 'Res Date', value: 'res' },
+        { text: 'Departure Date', value: 'departure' },
+        { text: 'Trans ID', value: 'trans_id' },
+        { text: 'Payment Date', value: 'payment_date' },
+        { text: 'Amount', value: 'amount' },
+        { text: 'Method', value: 'method' },
+        { text: 'Manager', value: 'manager' }
       ],
       mock: [
         {
-          id: '0000000000001',
-          firstname: 'Gloria',
-          lastname: 'Lane',
-          dob: '14.07.2020',
-          national: 'Taiwanese',
-          pass_num: '07.02.2020',
-          pass: '10.03.2020',
-          hotel: 'Tulemar Bungalows &...'
+          id: 'BA9212320',
+          res: '07.07.2020',
+          departure: '04.12.2019',
+          trans_id: '7632525',
+          payment_date: '31.10.2019',
+          amount: '$2,638',
+          method: 'Сash',
+          manager: 'Kristin Watson'
         },
         {
-          id: '0000000000001',
-          firstname: 'Gloria',
-          lastname: 'Lane',
-          dob: '14.07.2020',
-          national: 'Taiwanese',
-          pass_num: '07.02.2020',
-          pass: '10.03.2020',
-          hotel: 'Tulemar Bungalows &...'
+          id: 'BA9212320',
+          res: '07.07.2020',
+          departure: '04.12.2019',
+          trans_id: '7632525',
+          payment_date: '31.10.2019',
+          amount: '$2,638',
+          method: 'Non-cash',
+          manager: 'Kristin Watson'
         }
       ],
       items: [
         {
-          text: 'Customers',
+          text: 'Payments',
           disabled: true,
-          href: '/customers'
+          href: '/payments'
         }
       ]
     }
