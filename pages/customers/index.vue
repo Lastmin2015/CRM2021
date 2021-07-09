@@ -5,7 +5,7 @@
       :items="items"
     />
     <h2>
-      Travelers
+      Customers
     </h2>
     <div>
       <v-data-table
@@ -18,52 +18,27 @@
           <v-toolbar
             flat
           >
-            <v-toolbar-title>Travelers Information</v-toolbar-title>
+            <v-toolbar-title>Booking entries Information</v-toolbar-title>
             <v-divider
               class="mx-4"
               inset
               vertical
             ></v-divider>
             <v-spacer></v-spacer>
-            <v-btn-toggle
-              small
-              color="primary"
-              dense
-              group
-            >
-              <v-btn
-                small
-                :value="1"
-                text
-              >
-                <v-icon>mdi-magnify</v-icon>
-              </v-btn>
-
-              <v-btn
-                small
-                :value="2"
-                text
-              >
-                <v-icon>mdi-filter-minus-outline</v-icon>
-              </v-btn>
-
-              <v-btn
-                small
-                :value="3"
-                text
-              >
-                <v-icon>mdi-filter-plus-outline</v-icon>
-              </v-btn>
-
-              <v-btn
-                small
-                :value="4"
-                text
-              >
-                <v-icon>mdi-table-column-width</v-icon>
-              </v-btn>
-            </v-btn-toggle>
           </v-toolbar>
+        </template>
+        <template v-slot:[`item.info`]="{ item }">
+          <nuxt-link :to="`/be/${item.id}`">
+            View
+          </nuxt-link>
+        </template>
+        <template v-slot:[`item.status`]="{ item }">
+          <v-chip
+            :color="getColor(item.status)"
+            dark
+          >
+            {{ item.status }}
+          </v-chip>
         </template>
         <template v-slot:[`item.actions`]="">
           <v-icon
@@ -96,14 +71,13 @@ export default {
         //   sortable: false,
         //   value: 'id'
         // },
-        { text: 'REF Number', value: 'id' },
+        { text: 'info', value: 'info' },
         { text: 'Firstname', value: 'firstname' },
         { text: 'Lastname', value: 'lastname', width: 150 },
-        { text: 'DOB', value: 'dob', width: 150 },
-        { text: 'Nationality', value: 'national', width: 200 },
-        { text: 'Pass number', value: 'pass_num', width: 200 },
-        { text: 'Pass expiry date', value: 'pass', width: 200 },
-        { text: 'Hotel', value: 'hotel', width: 150 },
+        { text: 'Reg Date', value: 'reg_date', width: 150 },
+        { text: 'E-mail', value: 'email', width: 200 },
+        { text: 'Country', value: 'country', width: 150 },
+        { text: 'Bookings Num', value: 'booking_num', width: 150 },
         { text: '', value: 'actions', width: 121 }
       ],
       mock: [
@@ -111,28 +85,26 @@ export default {
           id: '0000000000001',
           firstname: 'Gloria',
           lastname: 'Lane',
-          dob: '14.07.2020',
-          national: 'Taiwanese',
-          pass_num: '07.02.2020',
-          pass: '10.03.2020',
-          hotel: 'Tulemar Bungalows &...'
+          reg_date: '14.07.2020',
+          email: 'binhan628@gmail.com',
+          booking_num: 'Saint Barthélemy',
+          country: 'BA9212320'
         },
         {
           id: '0000000000001',
           firstname: 'Gloria',
           lastname: 'Lane',
-          dob: '14.07.2020',
-          national: 'Taiwanese',
-          pass_num: '07.02.2020',
-          pass: '10.03.2020',
-          hotel: 'Tulemar Bungalows &...'
+          reg_date: '14.07.2020',
+          email: 'binhan628@gmail.com',
+          booking_num: 'Saint Barthélemy',
+          country: 'BA9212320'
         }
       ],
       items: [
         {
-          text: 'Travelers',
+          text: 'Customers',
           disabled: true,
-          href: '/travelers'
+          href: '/customers'
         }
       ]
     }
