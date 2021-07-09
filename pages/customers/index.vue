@@ -5,7 +5,7 @@
       :items="items"
     />
     <h2>
-      Customers
+      Travelers
     </h2>
     <div>
       <v-data-table
@@ -130,9 +130,9 @@ export default {
       ],
       items: [
         {
-          text: 'Customers',
+          text: 'Travelers',
           disabled: true,
-          href: '/customers'
+          href: '/travelers'
         }
       ]
     }
