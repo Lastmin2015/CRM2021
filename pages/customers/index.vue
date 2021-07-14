@@ -28,7 +28,7 @@
           </v-toolbar>
         </template>
         <template v-slot:[`item.info`]="{ item }">
-          <nuxt-link :to="`/be/${item.id}`">
+          <nuxt-link :to="`/customers/${item.id}`">
             View
           </nuxt-link>
         </template>

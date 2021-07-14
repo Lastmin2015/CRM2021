@@ -72,6 +72,11 @@
             mdi-delete
           </v-icon>
         </template>
+        <template v-slot:[`item.id`]="{ item }">
+          <nuxt-link :to="`/be/${item.id}`">
+            {{ item.id }}
+          </nuxt-link>
+        </template>
         <template v-slot:no-data>
           <v-btn
             color="primary"

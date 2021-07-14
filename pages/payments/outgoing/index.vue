@@ -27,6 +27,11 @@
             <v-spacer></v-spacer>
           </v-toolbar>
         </template>
+        <template v-slot:[`item.id`]="{ item }">
+          <nuxt-link :to="`/be/${item.id}`">
+            {{ item.id }}
+          </nuxt-link>
+        </template>
         <template v-slot:[`item.actions`]="">
           <v-icon
             small
