@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="mock"
+      :items="regions"
       class="elevation-1"
     >
       <template v-slot:top>
@@ -53,12 +53,28 @@
             >
               <v-icon>mdi-table-column-width</v-icon>
             </v-btn>
+            <v-btn
+              small
+              :value="5"
+              @click.prevent="addShield = !addShield"
+              text
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
           </v-btn-toggle>
         </v-toolbar>
       </template>
-      <template v-slot:[`item.actions`]="">
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-icon
+          class="mr-2"
+          @click="editRegion(item)"
+          small
+        >
+          mdi-pencil
+        </v-icon>
         <v-icon
           small
+          @click="deleteCountry(item.id)"
         >
           mdi-delete
         </v-icon>
@@ -66,20 +82,35 @@
       <template v-slot:no-data>
         <v-btn
           color="primary"
-          @click="initialize"
         >
           Refresh
         </v-btn>
       </template>
     </v-data-table>
+    <region-add-shield v-model="addShield" />
+    <region-edit-shield v-if="editShield" v-model="editShield" :item="editItem" />
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+import RegionAddShield from '../../components/RegionAddShield'
+import RegionEditShield from '../../components/RegionEditShield'
+
 export default {
   name: 'HotelPrices',
+  async fetch ({ store }) {
+    await store.dispatch('geography/regions/get')
+  },
+  components: {
+    RegionAddShield,
+    RegionEditShield
+  },
   data () {
     return {
+      addShield: false,
+      editShield: false,
+      editItem: [],
       headers: [
         {
           text: 'ID',
@@ -88,24 +119,8 @@ export default {
           value: 'id'
         },
         { text: 'Name', value: 'name' },
-        { text: 'ID Country', value: 'id_country' }
-      ],
-      mock: [
-        {
-          id: 'SD9212969',
-          name: 'Manyara',
-          id_country: 'KH9212924'
-        },
-        {
-          id: 'SD9212921',
-          name: 'Singida',
-          id_country: 'KH9212922'
-        },
-        {
-          id: 'SD9212922',
-          name: 'Mara',
-          id_country: 'KH9212923'
-        }
+        { text: 'ID Country', value: 'country_id' },
+        { text: 'Actions', value: 'actions', sortable: false }
       ],
       items: [
         {
@@ -119,6 +134,20 @@ export default {
           href: '/hotels/prices'
         }
       ]
+    }
+  },
+  computed: {
+    ...mapGetters({
+      regions: 'geography/regions/regions'
+    })
+  },
+  methods: {
+    ...mapActions({
+      deleteCountry: 'geography/regions/deleteRegion'
+    }),
+    editRegion (item) {
+      this.editItem = JSON.parse(JSON.stringify(item))
+      this.editShield = true
     }
   }
 }

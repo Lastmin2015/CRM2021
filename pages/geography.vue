@@ -34,10 +34,6 @@
 <script>
 export default {
   async asyncData ({ $axios }) {
-    const places = await $axios.$get('/api/places')
-    return {
-      places
-    }
   },
   data () {
     return {

@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="mock"
+      :items="resorts"
       class="elevation-1"
     >
       <template v-slot:top>
@@ -53,12 +53,28 @@
             >
               <v-icon>mdi-table-column-width</v-icon>
             </v-btn>
+            <v-btn
+              small
+              :value="5"
+              @click.prevent="addShield = !addShield"
+              text
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
           </v-btn-toggle>
         </v-toolbar>
       </template>
-      <template v-slot:[`item.actions`]="">
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-icon
+          class="mr-2"
+          @click="editResort(item)"
+          small
+        >
+          mdi-pencil
+        </v-icon>
         <v-icon
           small
+          @click="deleteResort(item.id)"
         >
           mdi-delete
         </v-icon>
@@ -66,20 +82,32 @@
       <template v-slot:no-data>
         <v-btn
           color="primary"
-          @click="initialize"
         >
           Refresh
         </v-btn>
       </template>
     </v-data-table>
+    <resort-add-shield v-model="addShield" />
+    <resort-edit-shield v-if="editShield" v-model="editShield" :item="editItem" />
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+import ResortAddShield from '../../components/ResortAddShield'
+import ResortEditShield from '../../components/ResortEditShield'
+
 export default {
   name: 'HotelPrices',
+  components: {
+    ResortAddShield,
+    ResortEditShield
+  },
   data () {
     return {
+      editShield: false,
+      addShield: false,
+      editItem: null,
       headers: [
         {
           text: 'ID',
@@ -87,29 +115,9 @@ export default {
           sortable: false,
           value: 'id'
         },
-        { text: 'Name', value: 'name' },
-        { text: 'ID Region', value: 'id_region' },
-        { text: 'ID Cities', value: 'id_city' }
-      ],
-      mock: [
-        {
-          id: 'SD9212969',
-          name: 'Заморский',
-          id_region: 'KH9212924',
-          id_city: 'KH9212922'
-        },
-        {
-          id: 'SD9212921',
-          name: 'Константинопольский',
-          id_region: 'KH9212922',
-          id_city: 'KH9212962'
-        },
-        {
-          id: 'SD9212922',
-          name: 'Анапа',
-          id_region: 'KH9212923',
-          id_city: 'KH9212912'
-        }
+        { text: 'ID Region', value: 'region_id' },
+        // { text: 'ID Cities', value: 'id_city' },
+        { text: 'Actions', value: 'actions', sortable: false }
       ],
       items: [
         {
@@ -123,6 +131,20 @@ export default {
           href: '/hotels/prices'
         }
       ]
+    }
+  },
+  computed: {
+    ...mapGetters({
+      resorts: 'geography/resort/resorts'
+    })
+  },
+  methods: {
+    ...mapActions({
+      deleteResort: 'geography/resort/deleteResort'
+    }),
+    editResort (item) {
+      this.editItem = JSON.parse(JSON.stringify(item))
+      this.editShield = true
     }
   }
 }

@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="mock"
+      :items="place"
       class="elevation-1"
     >
       <template v-slot:top>
@@ -53,33 +53,71 @@
             >
               <v-icon>mdi-table-column-width</v-icon>
             </v-btn>
+            <v-btn
+              small
+              :value="5"
+              @click.prevent="addShield = !addShield"
+              text
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
           </v-btn-toggle>
         </v-toolbar>
       </template>
-      <template v-slot:[`item.actions`]="">
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-icon
+          class="mr-2"
+          @click="editPlace(item)"
+          small
+        >
+          mdi-pencil
+        </v-icon>
         <v-icon
           small
+          @click="deletePlace(item.id)"
         >
           mdi-delete
         </v-icon>
       </template>
+      <template v-slot:[`item.is_city`]="{ item }">
+        <v-checkbox
+          :input-value="item.is_city"
+          value
+          disabled
+        ></v-checkbox>
+      </template>
       <template v-slot:no-data>
         <v-btn
           color="primary"
-          @click="initialize"
         >
           Refresh
         </v-btn>
       </template>
     </v-data-table>
+    <place-add-shield v-model="addShield" />
+    <place-edit-shield v-if="editShield" v-model="editShield" :item="editItem" />
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+import PlaceAddShield from '../../components/PlaceAddShield'
+import PlaceEditShield from '../../components/PlaceEditShield'
+
 export default {
   name: 'HotelPrices',
+  components: {
+    PlaceAddShield,
+    PlaceEditShield
+  },
+  async fetch ({ store }) {
+    await store.dispatch('geography/place/get')
+  },
   data () {
     return {
+      addShield: false,
+      editShield: false,
+      editItem: [],
       headers: [
         {
           text: 'ID',
@@ -87,42 +125,24 @@ export default {
           sortable: false,
           value: 'id'
         },
-        { text: 'Name', value: 'name' },
-        { text: 'ID Resort', value: 'id_resort' },
-        { text: 'IS CITY', value: 'is_city' }
-      ],
-      mock: [
-        {
-          id: 'SD9212969',
-          name: 'Вологда',
-          id_resort: 'KH9212924',
-          is_city: 'yes'
-        },
-        {
-          id: 'SD9212921',
-          name: 'Новочеркасск',
-          id_resort: 'KH9212922',
-          is_city: 'no'
-        },
-        {
-          id: 'SD9212922',
-          name: 'Балашиха',
-          id_resort: 'KH9212923',
-          is_city: 'no'
-        }
-      ],
-      items: [
-        {
-          text: 'Hotels',
-          disabled: false,
-          href: '/hotels'
-        },
-        {
-          text: 'Hotel Prices',
-          disabled: true,
-          href: '/hotels/prices'
-        }
+        { text: 'ID Resort', value: 'resort_id' },
+        { text: 'Is city', value: 'is_city' },
+        { text: 'Actions', value: 'actions', sortable: false }
       ]
+    }
+  },
+  computed: {
+    ...mapGetters({
+      place: 'geography/place/places'
+    })
+  },
+  methods: {
+    ...mapActions({
+      deletePlace: 'geography/place/deletePlace'
+    }),
+    editPlace (item) {
+      this.editItem = JSON.parse(JSON.stringify(item))
+      this.editShield = true
     }
   }
 }
