@@ -119,12 +119,12 @@ export default {
       addShield: false,
       headers: [
         { text: 'Info', value: 'info' },
-        {
-          text: 'Hotel ID',
-          align: 'start',
-          sortable: false,
-          value: 'id'
-        },
+        // {
+        //   text: 'Hotel ID',
+        //   align: 'start',
+        //   sortable: false,
+        //   value: 'id'
+        // },
         { text: 'Hotel Name', value: 'name', width: 200 },
         { text: 'Place', value: 'place.id', width: 100 },
         { text: 'Resort', value: 'place.resort_id' },

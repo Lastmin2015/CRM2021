@@ -119,12 +119,12 @@ export default {
       editShield: false,
       editItem: [],
       headers: [
-        {
-          text: 'ID',
-          align: 'start',
-          sortable: false,
-          value: 'id'
-        },
+        // {
+        //   text: 'ID',
+        //   align: 'start',
+        //   sortable: false,
+        //   value: 'id'
+        // },
         { text: 'ID Resort', value: 'resort_id' },
         { text: 'Is city', value: 'is_city' },
         { text: 'Actions', value: 'actions', sortable: false }

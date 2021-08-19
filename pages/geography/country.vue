@@ -112,12 +112,12 @@ export default {
       editShield: false,
       editItem: [],
       headers: [
-        {
-          text: 'ID',
-          align: 'start',
-          sortable: false,
-          value: 'id'
-        },
+        // {
+        //   text: 'ID',
+        //   align: 'start',
+        //   sortable: false,
+        //   value: 'id'
+        // },
         {
           text: 'Name',
           value: 'name'

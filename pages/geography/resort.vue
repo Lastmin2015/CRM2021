@@ -103,18 +103,15 @@ export default {
     ResortAddShield,
     ResortEditShield
   },
+  async fetch ({ store }) {
+    await store.dispatch('geography/resort/get')
+  },
   data () {
     return {
       editShield: false,
       addShield: false,
       editItem: null,
       headers: [
-        {
-          text: 'ID',
-          align: 'start',
-          sortable: false,
-          value: 'id'
-        },
         { text: 'ID Region', value: 'region_id' },
         // { text: 'ID Cities', value: 'id_city' },
         { text: 'Actions', value: 'actions', sortable: false }

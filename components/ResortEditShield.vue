@@ -33,20 +33,20 @@
       </v-toolbar>
       <v-card-text>
         <v-row>
-          <v-col class="mt-4"  md="6">
-            <v-text-field
-              label="Name"
-              v-model="region.name"
-              solo
-            ></v-text-field>
-          </v-col>
+<!--          <v-col class="mt-4"  md="6">-->
+<!--            <v-text-field-->
+<!--              label="Name"-->
+<!--              v-model="region.name"-->
+<!--              solo-->
+<!--            ></v-text-field>-->
+<!--          </v-col>-->
           <v-col class="mt-4" md="6">
             <v-select
               v-model="region.region_id"
               :items="country"
               item-value="id"
               item-text="name"
-              label="Item"
+              label="Region"
               required
             ></v-select>
           </v-col>
@@ -90,6 +90,7 @@ export default {
     }),
     async editCountry () {
       await this.editAction({
+        id: this.item.id,
         region_id: this.region.region_id
       })
       this.$parent.editShield = false
