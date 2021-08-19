@@ -49,7 +49,7 @@
               :items="regions"
               item-value="id"
               item-text="name"
-              label="Item"
+              label="Region"
               required
             ></v-select>
           </v-col>
