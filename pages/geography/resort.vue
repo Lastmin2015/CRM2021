@@ -112,6 +112,7 @@ export default {
       addShield: false,
       editItem: null,
       headers: [
+        { text: 'ID', value: 'id' },
         { text: 'ID Region', value: 'region_id' },
         // { text: 'ID Cities', value: 'id_city' },
         { text: 'Actions', value: 'actions', sortable: false }
