@@ -9,7 +9,7 @@
     </h2>
     <v-data-table
       :headers="headers"
-      :items="mock"
+      :items="hotels"
       sort-by="calories"
       class="elevation-1"
     >
@@ -53,7 +53,6 @@
             >
               <v-icon>mdi-filter-plus-outline</v-icon>
             </v-btn>
-
             <v-btn
               small
               :value="4"
@@ -61,17 +60,32 @@
             >
               <v-icon>mdi-table-column-width</v-icon>
             </v-btn>
+            <v-btn
+              small
+              :value="5"
+              @click.prevent="addShield = !addShield"
+              text
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
           </v-btn-toggle>
         </v-toolbar>
       </template>
-      <template v-slot:[`item.info`]="{ item }">
-        <nuxt-link :to="`/hotels/descriptions/${item.id}`">
+      <template v-slot:[`item.info`]="">
+<!--        <nuxt-link-->
+<!--&lt;!&ndash;          :to="`/hotels/descriptions/${item.id}`"&ndash;&gt;-->
+<!--&lt;!&ndash;          :to="`/hotels/descriptions/${item.id}`"&ndash;&gt;-->
+<!--        >-->
+        <nuxt-link
+          :to="`/hotels/descriptions`"
+        >
           View
         </nuxt-link>
       </template>
-      <template v-slot:[`item.actions`]="">
+      <template v-slot:[`item.actions`]="{ item }">
         <v-icon
           small
+          @click="deleteHotel(item.id)"
         >
           mdi-delete
         </v-icon>
@@ -79,20 +93,30 @@
       <template v-slot:no-data>
         <v-btn
           color="primary"
-          @click="initialize"
         >
           Refresh
         </v-btn>
       </template>
     </v-data-table>
+    <hotel-add-shield v-model="addShield" />
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+import HotelAddShield from '../../../components/hotels/HotelAddShield'
+
 export default {
   name: 'HotelDescription',
+  async fetch ({ store }) {
+    await store.dispatch('hotels/get')
+  },
+  components: {
+    HotelAddShield
+  },
   data () {
     return {
+      addShield: false,
       headers: [
         { text: 'Info', value: 'info' },
         {
@@ -101,42 +125,12 @@ export default {
           sortable: false,
           value: 'id'
         },
-        { text: 'Hotel Name', value: 'name' },
-        { text: 'Place', value: 'place' },
-        { text: 'Resort', value: 'resort' },
-        { text: 'Region', value: 'region' },
-        { text: 'Country', value: 'country' },
-        { text: 'Type', value: 'type' },
+        { text: 'Hotel Name', value: 'name', width: 200 },
+        { text: 'Place', value: 'place.id', width: 100 },
+        { text: 'Resort', value: 'place.resort_id' },
+        { text: 'Class', value: 'hotel_class.name' },
+        { text: 'Type', value: 'hotel_type.name' },
         { text: '', value: 'actions', sortable: false }
-      ],
-      mock: [
-        {
-          id: 'SD9212969',
-          name: 'The Peninsula Chicago',
-          place: 'Cincinnati',
-          resort: 'Vancouver',
-          region: 'Africa',
-          country: 'Monaco',
-          type: 'Boutique'
-        },
-        {
-          id: 'SD9212929',
-          name: 'Andronis Boutique Hotel',
-          place: 'San Isidro',
-          resort: 'Medicine Hat',
-          region: 'Asia',
-          country: 'Georgia',
-          type: 'Business'
-        },
-        {
-          id: 'SD9212920',
-          name: 'Hanoi La Siesta Hote...',
-          place: 'North Las Vegas ',
-          resort: 'Laval',
-          region: 'Oceania',
-          country: 'Iceland',
-          type: 'Boutique'
-        }
       ],
       items: [
         {
@@ -151,6 +145,16 @@ export default {
         }
       ]
     }
+  },
+  computed: {
+    ...mapGetters({
+      hotels: 'hotels/hotels'
+    })
+  },
+  methods: {
+    ...mapActions({
+      deleteHotel: 'hotels/deleteHotel'
+    })
   }
 }
 </script>

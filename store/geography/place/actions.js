@@ -1,8 +1,8 @@
 
 export default {
-  async get ({ commit }, payload) {
+  async get ({ commit }) {
     try {
-      const data = await this.$axios.$get('/api/places', {})
+      const data = await this.$axios.$get('/api/places')
       console.log(data.result)
       if (data.result) {
         commit('SET_PLACES', data.result)
@@ -12,7 +12,7 @@ export default {
       throw error.response.data.error.message
     }
   },
-  async add ({ commit, dispatch }, payload) {
+  async add ({ dispatch }, payload) {
     try {
       await this.$axios.$post('/api/places', {
         resort_id: payload.resort_id,
@@ -26,7 +26,7 @@ export default {
       throw error.response.data.error.message
     }
   },
-  async edit ({ commit, dispatch }, payload) {
+  async edit ({ dispatch }, payload) {
     try {
       await this.$axios.$put(`/api/places/${payload.id}`, {
         is_city: payload.is_city,
@@ -38,7 +38,7 @@ export default {
       throw error.response.data.error.message
     }
   },
-  async deletePlace ({ commit, dispatch }, payload) {
+  async deletePlace ({ dispatch }, payload) {
     try {
       await this.$axios.$delete(`/api/places/${payload}`)
       await dispatch('get')

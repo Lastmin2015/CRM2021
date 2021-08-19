@@ -7,15 +7,14 @@
     <v-form
       ref="form"
       v-model="valid"
-      lazy-validation
-    >
-    <form
-      @submit.prevent="signIn"
       class="auth-form"
+      lazy-validation
+      @submit.prevent="signIn"
     >
         <div class="auth-form__input">
           <v-text-field
             label="email"
+            type="email"
             :rules="rules.emailRules"
             v-model="accountInfo.email"
           ></v-text-field>
@@ -47,7 +46,6 @@
           </span>
           </nuxt-link>
         </div>
-    </form>
       </v-form>
   </div>
 </template>
