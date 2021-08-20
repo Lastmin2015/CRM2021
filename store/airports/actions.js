@@ -2,9 +2,9 @@
 export default {
   async get ({ commit }) {
     try {
-      const data = await this.$axios.$get('/api/hotels?with_data=true')
+      const data = await this.$axios.$get('/api/airports')
       if (data.result) {
-        commit('SET_HOTELS', data.result)
+        commit('SET_AIRPORTS', data.result)
       }
       return true
     } catch (error) {
@@ -12,19 +12,19 @@ export default {
     }
   },
 
-  async getById ({ commit }, payload) {
-    try {
-      const data = await this.$axios.$get(`/api/hotels/${payload}?with_data=true`)
-      commit('SET_CURRENT_HOTEL', data.result)
-      return data.result
-    } catch (error) {
-      throw error.response.data.error.message
-    }
-  },
+  // async getById ({ commit }, payload) {
+  //   try {
+  //     const data = await this.$axios.$get(`/api/airports/${payload}`)
+  //     commit('SET_CURRENT_HOTEL', data.result)
+  //     return data.result
+  //   } catch (error) {
+  //     throw error.response.data.error.message
+  //   }
+  // },
 
   async edit ({ dispatch }, payload) {
     try {
-      const data = await this.$axios.$put(`/api/hotels/${payload}`, {
+      const data = await this.$axios.$put(`/api/airports/${payload}`, {
         ...payload
       })
       dispatch('get')
@@ -36,7 +36,7 @@ export default {
 
   async add ({ commit, dispatch, rootState }, payload) {
     try {
-      await this.$axios.$post('/api/hotels', payload)
+      await this.$axios.$post('/api/airports', payload)
       dispatch('get')
       return true
     } catch (error) {
@@ -44,9 +44,9 @@ export default {
     }
   },
 
-  async deleteHotel ({ dispatch }, payload) {
+  async deleteAirport ({ dispatch }, payload) {
     try {
-      await this.$axios.$delete(`/api/hotels/${payload}`)
+      await this.$axios.$delete(`/api/airports/${payload}`)
       dispatch('get')
       return true
     } catch (error) {

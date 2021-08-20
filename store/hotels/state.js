@@ -1,4 +1,5 @@
 
 export default () => ({
-  hotels: []
+  hotels: [],
+  currentHotel: null
 })

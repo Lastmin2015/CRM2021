@@ -5,7 +5,7 @@
       :items="items"
     />
     <h2>
-      Card “Hotel description”
+      {{ hotel.name }}
     </h2>
     <v-row>
       <v-col md="4">
@@ -35,8 +35,8 @@
               <tbody>
               <tr
               >
-                <td>BA9212320</td>
-                <td>Hôtel Raphael</td>
+                <td>{{ hotel.id }}</td>
+                <td>{{ hotel.name }}</td>
               </tr>
               </tbody>
             </template>
@@ -76,15 +76,15 @@
               <tbody>
               <tr
               >
-                <td>0,23 km</td>
-                <td>0,25 km</td>
-                <td>0,65 km</td>
+                <td>{{ hotel.distance_to_beach }} km</td>
+                <td>{{ hotel.distance_to_slope }} km</td>
+                <td>{{ hotel.distance_to_city }} km</td>
                 <td>
                   <v-chip
                     color="green"
                     dark
                   >
-                    free
+                    <!--{{ hotel.beach_type.name }}-->
                   </v-chip>
                 </td>
               </tr>
@@ -167,25 +167,6 @@
             </h4>
           </v-toolbar>
           <hr>
-        <v-slide-group
-          class="mt-2"
-          multiple
-          show-arrows
-        >
-          <v-slide-item
-            v-for="n in 25"
-            :key="n"
-          >
-            <div class="mx-2">
-              <v-img
-                src="https://picsum.photos/510/300?random"
-                aspect-ratio="2"
-                width="79px"
-                height="79px"
-              ></v-img>
-            </div>
-          </v-slide-item>
-        </v-slide-group>
         </v-card>
       </v-col>
       <v-col md="4">
@@ -219,13 +200,13 @@
               <tr
               >
                 <td>
-                  5
+                  {{ hotel.stars }}
                 </td>
                 <td>
-                  96
+                  {{ hotel.trip_advisor_rating }}
                 </td>
                 <td>
-                  56
+                  {{ hotel.google_rating }}
                 </td>
               </tr>
               </tbody>
@@ -245,13 +226,6 @@
             </h4>
           </v-toolbar>
           <hr>
-          <p class="px-4 py-2">
-            The Hôtel Raphael is a modern, elegant four star hotel located by the sea. This is an opportunity to spend
-            a romantic and charming holiday among the captivating beauty of Taormina and the sea that surrounds
-            the coast of Sicily. <br> <br>
-            While enjoying a cocktail on the panoramic terrace and pool, you will be amazed by the view of the sea
-            and the magnificent landscape of the bay of the Isola Bella
-          </p>
         </v-card>
       </v-col>
       <v-col md="12">
@@ -300,10 +274,10 @@
                   Krasnaya Polyana
                 </td>
                 <td>
-                  -100.450279
+                  {{ hotel.longitude }}
                 </td>
                 <td>
-                  41.543056
+                  {{ hotel.latitude }}
                 </td>
               </tr>
               </tbody>
@@ -321,110 +295,91 @@
             <h4 class="subtitle-1 mt-1">
               Hotels airport
             </h4>
+            <v-spacer></v-spacer>
+            <v-btn
+              small
+              :value="5"
+              @click.prevent="addAirport = !addAirport"
+              text
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
           </v-toolbar>
           <hr>
-          <v-simple-table>
-            <template v-slot:default>
-              <thead>
-              <tr>
-                <th class="text-left">
-                  Assigned airport Name
-                </th>
-                <th class="text-left">
-                  Distance
-                </th>
-                <th class="text-left">
-                  Transfer Time
-                </th>
-                <th class="text-left">
-                  Transfer Price
-                </th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr
-              >
-                <td>Stockholm ESSA</td>
-                <td>12 km</td>
-                <td>Krasnaya Polyana</td>
-                <td>
-                  12:12
-                </td>
-                <td>
-                  $220
-                </td>
-              </tr>
-              <tr
-              >
-                <td>Stockholm ESSA</td>
-                <td>12 km</td>
-                <td>Krasnaya Polyana</td>
-                <td>
-                  12:12
-                </td>
-                <td>
-                  $220
-                </td>
-              </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
+<!--          <v-simple-table>-->
+<!--            <template v-slot:default>-->
+<!--              <thead>-->
+<!--              <tr>-->
+<!--                <th class="text-left">-->
+<!--                  Assigned airport Name-->
+<!--                </th>-->
+<!--                <th class="text-left">-->
+<!--                  Distance-->
+<!--                </th>-->
+<!--                <th class="text-left">-->
+<!--                  Transfer Time-->
+<!--                </th>-->
+<!--                <th class="text-left">-->
+<!--                  Transfer Price-->
+<!--                </th>-->
+<!--              </tr>-->
+<!--              </thead>-->
+<!--              <tbody>-->
+<!--              <tr-->
+<!--              >-->
+<!--                <td>Stockholm ESSA</td>-->
+<!--                <td>12 km</td>-->
+<!--                <td>Krasnaya Polyana</td>-->
+<!--                <td>-->
+<!--                  12:12-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  $220-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--              <tr-->
+<!--              >-->
+<!--                <td>Stockholm ESSA</td>-->
+<!--                <td>12 km</td>-->
+<!--                <td>Krasnaya Polyana</td>-->
+<!--                <td>-->
+<!--                  12:12-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  $220-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--              </tbody>-->
+<!--            </template>-->
+<!--          </v-simple-table>-->
         </v-card>
       </v-col>
     </v-row>
+    <hotel-airport-add-shield v-model="addAirport" />
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import HotelAirportAddShield from '../../../components/hotels/HotelAirportAddShield'
+
 export default {
   name: 'HotelDescription',
+  async validate ({ params, store }) {
+    return await store.dispatch('hotels/getById', params.id)
+  },
+  async fetch ({ params, store }) {
+    const hotel = store.getters['hotels/currentHotel']
+    if (!hotel) {
+      await store.dispatch('hotels/getById', params.id)
+    }
+  },
+  components: {
+    HotelAirportAddShield
+  },
   data () {
     return {
-      headers: [
-        { text: 'Info', value: 'info' },
-        {
-          text: 'Hotel ID',
-          align: 'start',
-          sortable: false,
-          value: 'id'
-        },
-        { text: 'Hotel Name', value: 'name' },
-        { text: 'Place', value: 'place' },
-        { text: 'Resort', value: 'resort' },
-        { text: 'Region', value: 'region' },
-        { text: 'Country', value: 'country' },
-        { text: 'Type', value: 'type' },
-        { text: '', value: 'actions', sortable: false }
-      ],
-      mock: [
-        {
-          id: 'SD9212969',
-          name: 'The Peninsula Chicago',
-          place: 'Cincinnati',
-          resort: 'Vancouver',
-          region: 'Africa',
-          country: 'Monaco',
-          type: 'Boutique'
-        },
-        {
-          id: 'SD9212929',
-          name: 'Andronis Boutique Hotel',
-          place: 'San Isidro',
-          resort: 'Medicine Hat',
-          region: 'Asia',
-          country: 'Georgia',
-          type: 'Business'
-        },
-        {
-          id: 'SD9212920',
-          name: 'Hanoi La Siesta Hote...',
-          place: 'North Las Vegas ',
-          resort: 'Laval',
-          region: 'Oceania',
-          country: 'Iceland',
-          type: 'Boutique'
-        }
-      ],
+      addAirport: false,
       items: [
         {
           text: 'Hotels',
@@ -443,6 +398,30 @@ export default {
         }
       ]
     }
+  },
+  mounted () {
+    this.items = [
+      {
+        text: 'Hotels',
+        disabled: false,
+        href: '/hotels'
+      },
+      {
+        text: 'Hotel description',
+        disabled: false,
+        href: '/hotels/descriptions'
+      },
+      {
+        text: this.hotel.name,
+        disabled: true,
+        href: '/hotels/description/'
+      }
+    ]
+  },
+  computed: {
+    ...mapGetters({
+      hotel: 'hotels/currentHotel'
+    })
   }
 }
 </script>

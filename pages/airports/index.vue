@@ -10,7 +10,7 @@
     <div>
       <v-data-table
         :headers="headers"
-        :items="mock"
+        :items="airports"
         sort-by="calories"
         class="elevation-1"
       >
@@ -63,6 +63,14 @@
                 <v-icon>mdi-table-column-width</v-icon>
               </v-btn>
             </v-btn-toggle>
+            <v-btn
+              small
+              :value="5"
+              @click.prevent="addShield = !addShield"
+              text
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
           </v-toolbar>
         </template>
         <template v-slot:[`item.actions`]="">
@@ -75,26 +83,30 @@
         <template v-slot:no-data>
           <v-btn
             color="primary"
-            @click="initialize"
           >
             Refresh
           </v-btn>
         </template>
       </v-data-table>
     </div>
+    <airport-add-shield v-model="addShield" />
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import AirportAddShield from '../../components/AirportAddShield'
+
 export default {
-  async asyncData ({ $axios }) {
-    const list = await $axios.$get('/api/airports')
-    return {
-      list
-    }
+  async fetch ({ store }) {
+    await store.dispatch('airports/get')
+  },
+  components: {
+    AirportAddShield
   },
   data () {
     return {
+      addShield: false,
       headers: [
         {
           text: 'Airport ID',
@@ -103,32 +115,9 @@ export default {
           value: 'id'
         },
         { text: 'Name', value: 'name' },
-        { text: 'IATA code', value: 'ita' },
-        { text: 'Region ID', value: 'region_id' },
+        { text: 'IATA code', value: 'iata_code' },
+        { text: 'Region ID', value: 'iso_region' },
         { text: 'Country ID', value: 'country_id' }
-      ],
-      mock: [
-        {
-          id: 'SD9212969',
-          name: 'Stockholm ESSA',
-          ita: 'JFK',
-          region_id: 'SD9212969',
-          country_id: 'KH9212924'
-        },
-        {
-          id: 'SD9212961',
-          name: 'Toronto CYYZ',
-          ita: 'MIA',
-          region_id: 'SD9212963',
-          country_id: 'KH9212922'
-        },
-        {
-          id: 'SD9212965',
-          name: 'Washington KIAD',
-          ita: 'LCY',
-          region_id: 'SD9212912',
-          country_id: 'KH9212222'
-        }
       ],
       items: [
         {
@@ -138,6 +127,11 @@ export default {
         }
       ]
     }
+  },
+  computed: {
+    ...mapGetters({
+      airports: 'airports/airports'
+    })
   }
 }
 </script>

@@ -71,13 +71,9 @@
           </v-btn-toggle>
         </v-toolbar>
       </template>
-      <template v-slot:[`item.info`]="">
-<!--        <nuxt-link-->
-<!--&lt;!&ndash;          :to="`/hotels/descriptions/${item.id}`"&ndash;&gt;-->
-<!--&lt;!&ndash;          :to="`/hotels/descriptions/${item.id}`"&ndash;&gt;-->
-<!--        >-->
+      <template v-slot:[`item.info`]="{ item }">
         <nuxt-link
-          :to="`/hotels/descriptions`"
+          :to="`/hotels/descriptions/${item.id}`"
         >
           View
         </nuxt-link>
