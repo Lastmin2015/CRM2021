@@ -1,0 +1,30 @@
+html {
+  overflow-y: auto !important;
+}
+.auth-form {
+  padding: 0 65px 0 50px;
+  &__restore {
+    color: #717887!important;
+    text-decoration: none;
+    display: block;
+    margin-top: 15px;
+  }
+}
+.logo {
+  color: #717887;
+  font-weight: 900;
+  font-size: 40px;
+  margin-bottom: 10px;
+  b {
+    color: #33A8A1;
+  }
+}
+.hello-text {
+  margin-bottom: 42px;
+  font-size: 14px;
+}
+
+.toasted-container.top-right {
+  top: 20px!important;
+  right: 20px!important;
+}
